@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@routes": ["routes"],
+      "@controllers": ["controllers"],
+      "@middlewares": ["middlewares"],
+      "@models": ["models"],
+      "@types/*": ["./node_modules/@types"]
+    },
+    "module": "commonjs",
+    "target": "es6",
+    "moduleResolution": "node",
+    "incremental": true,
+    "experimentalDecorators": true,
+    "rootDir": "./",
+    "baseUrl": ".",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "declarationDir": "./dist/types",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "typeRoots": ["@types", "./node_modules/@types"],
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "lib": ["es2015"]
+}
