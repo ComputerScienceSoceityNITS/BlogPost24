@@ -4,6 +4,7 @@ import { AuthMiddleware } from "@middlewares";
 
 const router = Router();
 
+router.get('/all', blogControllers.getAllBlogs);
 router.post('/create', AuthMiddleware.authenticateToken, blogControllers.createBlog);
 router.delete(
   "/delete/:id",
@@ -14,6 +15,5 @@ router.put(
   AuthMiddleware.authenticateToken, blogControllers.updateBlog
 );
 router.get("/:id", AuthMiddleware.authenticateToken, blogControllers.getBlogById);
-// router.get('/all', blogControllers.getAllBlogs);
 
 export {router}

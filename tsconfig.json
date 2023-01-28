@@ -5,6 +5,7 @@
       "@controllers": ["controllers"],
       "@middlewares": ["middlewares"],
       "@models": ["models"],
+      "@services": ["services"],
       "@types/*": ["./node_modules/@types"]
     },
     "module": "commonjs",

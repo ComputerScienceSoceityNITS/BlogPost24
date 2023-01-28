@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import httpStatus from 'http-status';
 import { Types } from 'mongoose';
 import { BlogModel } from '@models'
+import { PaginatedResults } from '@services'
 
 
 const createBlog = async (req: Request, res: Response, next: NextFunction) => {
@@ -60,9 +61,13 @@ const getBlogById = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const getAllBlogs = async ( res: Response, next: NextFunction) => {
+const getAllBlogs = async ( req:Request, res: Response, next: NextFunction) => {
     try {
-        const blogs = await BlogModel.BlogSchema.find({});
+        const blogs = await PaginatedResults.paginatedResults(
+          BlogModel.BlogSchema,
+          <string>req.query.page,
+          <string>req.query.limit
+        );
         return res.status(httpStatus.OK).json({
             blogs: blogs
         })
