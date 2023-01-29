@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const paginatedResults = async (model: typeof mongoose.Model, pageS: string, limitS: string) => {
+const paginatedResults = async (model: typeof mongoose.Model, pageS: string, limitS: string = '10') => {
     const page = parseInt(pageS);
     const limit = parseInt(limitS);
 
