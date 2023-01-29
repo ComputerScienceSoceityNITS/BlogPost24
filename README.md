@@ -1,12 +1,12 @@
 # CausalFunnel Task
 
 ## Tech Stack:
-### NodeJs/ExpressJs
-### MongoDB/Mongoose
-### Typescript
+1. NodeJs/ExpressJs
+2. MongoDB/Mongoose
+3. Typescript
 
 
 ## Features to be implemented:
--> Signup, Login, Password Reset 
--> only Authenticated Users able to create, update and delete Blogs
--> default route, gives data of 10 blogs [?page=N -> return 10 blogs from Nth pages]
+1. Signup, Login, Password Reset 
+2. only Authenticated Users able to create, update and delete Blogs
+3. default route, gives data of 10 blogs [?page=N -> return 10 blogs from Nth pages]
