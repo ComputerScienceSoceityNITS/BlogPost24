@@ -38,4 +38,4 @@ app.options("*", cors());
 app.use('/auth', Routers.authRoutes.router)
 app.use('/blogs', Routers.blogRoutes.router)
 
-module.exports = { httpServer };
+export { httpServer };

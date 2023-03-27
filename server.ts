@@ -1,4 +1,4 @@
-const { httpServer } = require("./app");
+import { httpServer } from "./app";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
