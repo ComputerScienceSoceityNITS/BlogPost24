@@ -21,13 +21,20 @@ const createBlog = async (req: Request, res: Response, next: NextFunction) => {
 const deleteBlog = async (req: Request, res: Response, next: NextFunction) => { 
     try {
         const blogId = new Types.ObjectId(req.params.id);
-        await BlogModel.BlogSchema.deleteOne({ __id: blogId });
+        const noDeleted = await BlogModel.BlogSchema.deleteOne({ __id: blogId });
+        if(!noDeleted.deletedCount) {
+            return res.status(httpStatus.NOT_FOUND).json({
+                message : "Blog not found"
+            })};
         return res.status(httpStatus.OK).json({
             message: "Blog was successfully deleted"
         })
     }
     catch (err) {
-        return next(err);
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message : "Invalid blog id",
+            error: next(err)
+        });
     }
 }
 
@@ -35,14 +42,23 @@ const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
     try {;
         const blogId = new Types.ObjectId(req.params.id);
         const blog = await BlogModel.BlogSchema.findByIdAndUpdate(blogId, req.body)
+        if (!blog) {
+            return res.status(httpStatus.NOT_FOUND).json({
+                message: "Blog not found"
+            })
+        }
         return res.status(httpStatus.OK).json({
             blog: blog,
             message: "Blog was updated successfully"
         })
     }
     catch (err) {
-        return next(err);
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message : "Invalid blog id",
+            error: next(err)
+        });
     }
+    
 }
 
 const getBlogById = async (req: Request, res: Response, next: NextFunction) => {
@@ -50,14 +66,19 @@ const getBlogById = async (req: Request, res: Response, next: NextFunction) => {
         const blogId = new Types.ObjectId(req.params.id);
         const blog = await BlogModel.BlogSchema.findById(blogId);
         if (!blog) {
-            return res.status(httpStatus.BAD_REQUEST)
+            return res.status(httpStatus.NOT_FOUND).json({
+                message: "Blog not found"
+            })
         }
         return res.status(httpStatus.OK).json({
             blog: blog
         })
     }
     catch (err) {
-        return next(err);
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message : "Invalid blog id",
+            error: next(err)
+        });
     }
 }
 
@@ -73,7 +94,10 @@ const getAllBlogs = async ( req:Request, res: Response, next: NextFunction) => {
         })
     }
     catch (err) {
-        return next(err);
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message : "Invalid query parameters",
+            error: next(err)
+            });
     }
 }
 

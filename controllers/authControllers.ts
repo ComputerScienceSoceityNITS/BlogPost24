@@ -32,13 +32,13 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     user = await UserModel.UserSchema.findOne({ email: email });
     if (!user) {
-      return res.status(httpStatus.BAD_REQUEST).json({
+      return res.status(httpStatus.NOT_FOUND).json({
         message: "User with this email does not exist",
       });
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.status(httpStatus.BAD_REQUEST).json({
+      return res.status(httpStatus.UNAUTHORIZED).json({
         message: "Password is incorrect",
       });
     }
@@ -80,7 +80,10 @@ const resetPassword = async (req: Request, res: Response, next: NextFunction) =>
     })
   }
   catch (err) {
-    return next(err);
+    return res.status(httpStatus.BAD_REQUEST).json({
+      message: "Invalid token",
+      error: next(err)
+      });
   }
 }
 
@@ -102,7 +105,10 @@ const forgotPassword = async (req: Request, res: Response, next: NextFunction) =
     });
   }
   catch (err) {
-    return next(err);
+    return res.status(httpStatus.BAD_REQUEST).json({
+      message: "Invalid email",
+      error: next(err)
+      });
   }
 }
 
