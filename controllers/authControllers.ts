@@ -106,4 +106,40 @@ const forgotPassword = async (req: Request, res: Response, next: NextFunction) =
   }
 }
 
-export { signup, login, resetPassword, forgotPassword };
+const updatePassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, currentPassword } = req.body;
+    const user = await UserModel.UserSchema.findOne({ email }); 
+    if (!user) {
+      return res.status(httpStatus.NOT_FOUND).json({
+        message: "User not found. Please try again!"
+      })
+    }
+    if(currentPassword && !await bcrypt.compare(currentPassword, user.password)) {
+      return res.status(httpStatus.FORBIDDEN).json({
+        message: "Current password is incorrect"
+      })
+    }
+    if(req.body.password) {
+    user.password = req.body.password;
+    }
+    else {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        message: "Password field is empty"
+      })
+    }
+    await user.save();
+    return res.status(httpStatus.OK).json({
+      user: user,
+      message: "Password updated successfully"
+    })
+  }
+  catch (err) {
+    return res.status(httpStatus.BAD_REQUEST).json({
+      message: "Something went wrong. Please try again!",
+      error: next(err)
+      });
+  }
+}
+
+export { signup, login, resetPassword, forgotPassword, updatePassword};
