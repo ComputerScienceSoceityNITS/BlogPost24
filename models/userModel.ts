@@ -9,6 +9,7 @@ const userSchema = new Schema({
   email: { type: "string", required: true },
   password: { type: "string", required: true },
   dob: { type: Date},
+  verified: { type: Boolean, default: false },
 });
 
 userSchema.pre('save', async function (next) { 
