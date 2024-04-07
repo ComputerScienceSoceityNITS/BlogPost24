@@ -8,5 +8,6 @@ router.post("/login", authControllers.login);
 // router.get("/logout", authControllers.logout);
 router.post('/forgotPassword', authControllers.forgotPassword)
 router.post('/resetPassword/:id/:resetToken', authControllers.resetPassword)
+router.post('/verifyEmail/:id/:verifyToken', authControllers.verifyEmail)
 
 export {router}
