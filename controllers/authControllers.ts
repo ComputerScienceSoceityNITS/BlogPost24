@@ -8,11 +8,25 @@ import { Types } from "mongoose";
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     let user;
-    const { email } = req.body;
+    const { email,dob } = req.body;
     user = await UserModel.UserSchema.findOne({ email: email });
     if (user) {
       return res.status(httpStatus.BAD_REQUEST).send({
         message: "Email already in use",
+      });
+    }
+    if(!isNaN(Date.parse(dob))){
+      const dobDate = new Date(dob);
+      const currentDate = new Date();
+      if(dobDate >= currentDate){
+        return res.status(httpStatus.BAD_REQUEST).send({
+          message: "Invalid date of birth",
+        });
+      }
+    }
+    else{
+      return res.status(httpStatus.BAD_REQUEST).send({
+        message: "Invalid date of birth",
       });
     }
     user = await UserModel.UserSchema.create(req.body);
