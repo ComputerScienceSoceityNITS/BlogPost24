@@ -34,7 +34,7 @@ const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
 const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
     try {;
         const blogId = new Types.ObjectId(req.params.id);
-        const blog = await BlogModel.BlogSchema.findByIdAndUpdate(blogId, req.body)
+        const blog = await BlogModel.BlogSchema.findByIdAndUpdate(blogId, req.body,{new: true})
         return res.status(httpStatus.OK).json({
             blog: blog,
             message: "Blog was updated successfully"
